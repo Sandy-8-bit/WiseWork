@@ -1,0 +1,107 @@
+@page "/favorite-cities"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject WeatherService WeatherService
+@inject NavigationManager NavigationManager
+@using BlazorWasmApp.Models
+@inject IJSRuntime JSRuntime
+
+<h3 style="text-align:center; margin: 20px;">Favorite Cities</h3>
+
+@if (favoriteCities == null || !favoriteCities.Any())
+{
+    <p style="text-align:center;">No favorite cities found.</p>
+}
+else
+{
+    <ul style="list-style-type: none; padding: 0; text-align: center;">
+        @foreach (var favoriteCity in favoriteCities)
+        {
+            <li style="margin: 10px 0; display: flex; justify-content: center; align-items: center;">
+                <button @onclick="@(() => ShowWeather(favoriteCity))" 
+                        style="padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; 
+                               border: none; border-radius: 5px; cursor: pointer;">
+                    @favoriteCity
+                </button>
+
+                <button @onclick="@(() => DeleteCity(favoriteCity))" 
+                        style="padding: 10px 15px; font-size: 16px; background-color: #dc3545; color: white; 
+                               border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
+                    Delete
+                </button>
+            </li>
+        }
+    </ul>
+}
+
+@if (selectedCity != null && weatherData != null)
+{
+    <div style="text-align: center; border: 1px solid #007bff; border-radius: 5px; padding: 20px; 
+                background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <h3>Weather in @weatherData.name</h3>
+        <p>Temperature: @weatherData.main.temp °C</p>
+        <p>Feels Like: @weatherData.main.feels_like °C</p>
+        <p>Humidity: @weatherData.main.humidity %</p>
+        <p>Description: @weatherData.weather.First().description</p>
+        <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
+             alt="Weather Icon" style="width: 100px; margin: 10px 0;" />
+    </div>
+}
+
+@code {
+    private List<string>? favoriteCities; // List of favorite cities
+    private WeatherResponse? weatherData; // Weather data for the selected city
+    private string? selectedCity; // The city currently selected
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the list of favorite cities from local storage
+        favoriteCities = await localStorage.GetItemAsync<List<string>>("favoriteCities") ?? new List<string>();
+    }
+
+    private async Task ShowWeather(string city)
+    {
+        selectedCity = city; // Set the selected city
+        weatherData = await WeatherService.GetWeatherAsync(city); // Fetch weather data
+
+        if (weatherData == null)
+        {
+            Console.WriteLine("Error retrieving weather data.");
+            await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving weather data.", "error");
+        }
+    }
+
+    private async Task DeleteCity(string city)
+    {
+        try
+        {
+            if (favoriteCities != null && favoriteCities.Contains(city))
+            {
+                favoriteCities.Remove(city); // Remove the city from the list
+
+                // Update the list in local storage
+                await localStorage.SetItemAsync("favoriteCities", favoriteCities);
+
+                // Show success message
+                await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been removed from favorites.", "success");
+
+                // If the deleted city is currently displayed, clear the weather data
+                if (selectedCity == city)
+                {
+                    selectedCity = null;
+                    weatherData = null;
+                }
+            }
+            else
+            {
+                // Show info if city is not found
+                await JSRuntime.InvokeVoidAsync("showToast", "City not found in favorites.", "info");
+            }
+        }
+        catch (Exception ex)
+        {
+            // Show error message if something goes wrong
+            Console.WriteLine($"Error removing city from favorites: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while removing the city.", "error");
+        }
+    }
+}

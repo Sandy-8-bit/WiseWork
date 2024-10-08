@@ -1,0 +1,126 @@
+@page "/weather"
+@inject WeatherService WeatherService
+@inject NavigationManager NavigationManager
+@using BlazorWasmApp.Models
+@inject IJSRuntime JSRuntime
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<h3 style="text-align:center; margin: 20px;">Weather Information</h3>
+
+<div style="display: flex; justify-content: center; margin: 20px 0;">
+    <input type="text" @bind="city" placeholder="Enter city" 
+           style="padding: 10px; font-size: 16px; border: 2px solid #007bff; border-radius: 5px; margin-right: 10px;"/>
+    <button @onclick="GetWeather" 
+            style="padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; border: none; 
+                   border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+        Search
+    </button>
+</div>
+
+@if (isLoading)
+{
+    <p style="text-align:center; font-size: 18px; color: #007bff;">Loading...</p>
+}
+else if (error)
+{
+    <p style="text-align:center; font-size: 18px; color: #ff4d4d;">Error retrieving weather data. Please try again.</p>
+}
+else if (weatherData != null)
+{
+    <div style="text-align: center; border: 1px solid #007bff; border-radius: 5px; padding: 20px; 
+                background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+        <h3>Weather in @weatherData.name</h3>
+        <p>Temperature: @weatherData.main.temp °C</p>
+        <p>Feels Like: @weatherData.main.feels_like °C</p>
+        <p>Humidity: @weatherData.main.humidity %</p>
+        <p>Description: @weatherData.weather.First().description</p>
+        <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
+             alt="Weather Icon" style="width: 100px; margin: 10px 0;" />
+        
+        <button @onclick="AddToFavorites" 
+                style="padding: 10px 15px; font-size: 16px; background-color: #28a745; color: white; 
+                       border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+            Add to Favorites
+        </button>
+    </div>
+}
+
+@code {
+    private string? city; 
+    private WeatherResponse? weatherData; 
+    private bool isLoading; 
+    private bool error; 
+
+    protected override void OnInitialized()
+    {
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        city = query["city"]; 
+
+        if (!string.IsNullOrEmpty(city))
+        {
+            _ = GetWeather(); 
+        }
+    }
+
+    public async Task GetWeather()
+    {
+        try
+        {
+            isLoading = true;
+            error = false;
+
+            Console.WriteLine($"Fetching weather for city: {city}");
+            weatherData = await WeatherService.GetWeatherAsync(city);
+
+            if (weatherData == null)
+            {
+                error = true; 
+                Console.WriteLine("No weather data returned.");
+            }
+        }
+        catch (Exception ex)
+        {
+            error = true;
+            Console.WriteLine($"Error fetching weather data: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; 
+        }
+    }
+
+    private async Task AddToFavorites()
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(city))
+            {
+                var favorites = await localStorage.GetItemAsync<List<string>>("favoriteCities") ?? new List<string>();
+
+                if (!favorites.Contains(city))
+                {
+                    favorites.Add(city);
+                    await localStorage.SetItemAsync("favoriteCities", favorites);
+                    Console.WriteLine("City added to favorites."); 
+
+                    // Show success message
+                    await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been added to favorites.", "success");
+                }
+                else
+                {
+                    Console.WriteLine("City is already in favorites.");
+                    // Show info message
+                    await JSRuntime.InvokeVoidAsync("showToast", $"{city} is already in favorites.", "info");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding to favorites: {ex.Message}");
+            
+            // Show error message to the user
+            await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while adding to favorites.", "error");
+        }
+    }
+}
