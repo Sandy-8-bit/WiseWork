@@ -9,7 +9,7 @@
 
 <div style="display: flex; justify-content: center; margin: 20px 0;">
     <input type="text" @bind="city" placeholder="Enter city" 
-           style="padding: 10px; font-size: 16px; border: 2px solid #007bff; border-radius: 5px; margin-right: 10px;"/>
+           style="padding: 10px; font-size: 16px; border: 2px solid #007bff; border-radius: 5px; margin-right: 10px;" />
     <button @onclick="GetWeather" 
             style="padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; border: none; 
                    border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
@@ -36,18 +36,46 @@ else if (weatherData != null)
         <p>Description: @weatherData.weather.First().description</p>
         <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
              alt="Weather Icon" style="width: 100px; margin: 10px 0;" />
-        
+
         <button @onclick="AddToFavorites" 
                 style="padding: 10px 15px; font-size: 16px; background-color: #28a745; color: white; 
                        border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
             Add to Favorites
         </button>
+
+        <button @onclick="ShowFiveDayForecast" 
+                style="padding: 10px 15px; font-size: 16px; background-color: #17a2b8; color: white; 
+                       border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s; margin-top: 10px;">
+            Show 5-Day Forecast
+        </button>
     </div>
 }
+@if (forecastData != null)
+{
+    <h3 style="text-align:center; margin: 20px;">5-Day Forecast for @city</h3>
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+        @foreach (var day in forecastData.list)
+        {
+            <div style="border: 1px solid #007bff; border-radius: 5px; padding: 20px; margin: 10px; 
+                        background-color: #f8f9fa; width: 200px; text-align: center;">
+                <h4>@DateTime.Parse(day.dt_txt).ToString("dddd")</h4>
+                <p>Temp: @day.main.temp °C</p>
+                <p>Humidity: @day.main.humidity %</p>
+                <p>@day.weather.First().description</p>
+                <img src="https://openweathermap.org/img/w/@($"{day.weather.First().icon}.png")" 
+                     alt="Weather Icon" style="width: 50px; margin-top: 10px;" />
+            </div>
+        }
+    </div>
+
+}
+
 
 @code {
     private string? city; 
     private WeatherResponse? weatherData; 
+    private ForecastResponse? forecastData; // 5-day forecast data
     private bool isLoading; 
     private bool error; 
 
@@ -123,4 +151,41 @@ else if (weatherData != null)
             await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while adding to favorites.", "error");
         }
     }
+
+   private async Task ShowFiveDayForecast()
+{
+    try
+    {
+        isLoading = true;
+        error = false;
+
+        Console.WriteLine($"Fetching 5-day forecast for city: {city}");
+        forecastData = await WeatherService.GetFiveDayForecastAsync(city);  // Fetch the 5-day forecast
+
+        if (forecastData == null)
+        {
+            error = true;
+            Console.WriteLine("No forecast data returned.");
+            return;
+        }
+
+        // Grouping the forecasts by date
+        var groupedForecast = forecastData.list
+            .GroupBy(f => f.dt_txt.Split(' ')[0]) // Group by date
+            .Select(g => g.First()) // Select the first entry for each group
+            .ToList();
+
+        forecastData.list = groupedForecast; // Update the forecastData with grouped entries
+    }
+    catch (Exception ex)
+    {
+        error = true;
+        Console.WriteLine($"Error fetching forecast data: {ex.Message}");
+    }
+    finally
+    {
+        isLoading = false;
+    }
+}
+
 }

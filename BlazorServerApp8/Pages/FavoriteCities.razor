@@ -5,51 +5,77 @@
 @using BlazorWasmApp.Models
 @inject IJSRuntime JSRuntime
 
-<h3 style="text-align:center; margin: 20px;">Favorite Cities</h3>
+<div class="app-container">
+    <div class="app-header">
+        <h1>Your Favorite Cities</h1>
+        <p>Select a city below to view its current weather or remove it from your list.</p>
+    </div>
 
-@if (favoriteCities == null || !favoriteCities.Any())
-{
-    <p style="text-align:center;">No favorite cities found.</p>
-}
-else
-{
-    <ul style="list-style-type: none; padding: 0; text-align: center;">
-        @foreach (var favoriteCity in favoriteCities)
-        {
-            <li style="margin: 10px 0; display: flex; justify-content: center; align-items: center;">
-                <button @onclick="@(() => ShowWeather(favoriteCity))" 
-                        style="padding: 10px 15px; font-size: 16px; background-color: #007bff; color: white; 
-                               border: none; border-radius: 5px; cursor: pointer;">
-                    @favoriteCity
-                </button>
+    @if (favoriteCities == null || !favoriteCities.Any())
+    {
+        <p class="app-empty-message">No favorite cities found. Add some to get started!</p>
+    }
+    else
+    {
+        <ul class="app-city-list">
+            @foreach (var favoriteCity in favoriteCities)
+            {
+                <li class="app-city-item">
+                    <button class="app-city-button" @onclick="@(() => ShowWeather(favoriteCity))">
+                        <i class="fas fa-city"></i> @favoriteCity
+                    </button>
+                    <button class="app-delete-button" @onclick="@(() => DeleteCity(favoriteCity))">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                    <button class="app-forecast-button" @onclick="@(() => ShowFiveDayForecast(favoriteCity))">
+                        <i class="fas fa-calendar-alt"></i> 5-Day Forecast
+                    </button>
+                </li>
+            }
+        </ul>
+    }
 
-                <button @onclick="@(() => DeleteCity(favoriteCity))" 
-                        style="padding: 10px 15px; font-size: 16px; background-color: #dc3545; color: white; 
-                               border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">
-                    Delete
-                </button>
-            </li>
-        }
-    </ul>
-}
+    @if (selectedCity != null && weatherData != null)
+    {
+        <div class="app-weather-container">
+            <h2>Weather in @weatherData.name</h2>
+            <p class="app-weather-info"><strong>Temperature:</strong> @weatherData.main.temp °C</p>
+            <p class="app-weather-info"><strong>Feels Like:</strong> @weatherData.main.feels_like °C</p>
+            <p class="app-weather-info"><strong>Humidity:</strong> @weatherData.main.humidity %</p>
+            <p class="app-weather-info"><strong>Description:</strong> @weatherData.weather.First().description</p>
+            <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
+                 alt="Weather Icon" class="app-weather-icon" />
+            <button class="app-back-button" @onclick="CloseWeather">Close</button>
+        </div>
+    }
 
-@if (selectedCity != null && weatherData != null)
+    @if (forecastData != null)
 {
-    <div style="text-align: center; border: 1px solid #007bff; border-radius: 5px; padding: 20px; 
-                background-color: #f8f9fa; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
-        <h3>Weather in @weatherData.name</h3>
-        <p>Temperature: @weatherData.main.temp °C</p>
-        <p>Feels Like: @weatherData.main.feels_like °C</p>
-        <p>Humidity: @weatherData.main.humidity %</p>
-        <p>Description: @weatherData.weather.First().description</p>
-        <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
-             alt="Weather Icon" style="width: 100px; margin: 10px 0;" />
+    <div class="app-forecast-container">
+        <h3>5-Day Forecast for @selectedCity</h3>
+        <button class="app-back-button" @onclick="CloseForecast">Close</button>
+        <div class="forecast-list">
+            @foreach (var day in forecastData.list)
+            {
+                <div class="app-forecast-item">
+                    <h4>@DateTime.Parse(day.dt_txt).ToString("dddd")</h4>
+                    <p>Temp: @day.main.temp °C</p>
+                    <p>Humidity: @day.main.humidity %</p>
+                    <p>@day.weather.First().description</p>
+                    <img src="https://openweathermap.org/img/w/@($"{day.weather.First().icon}.png")" 
+                         alt="Weather Icon" style="width: 50px; margin-top: 10px;" />
+                </div>
+            }
+        </div>
     </div>
 }
+
+</div>
 
 @code {
     private List<string>? favoriteCities; // List of favorite cities
     private WeatherResponse? weatherData; // Weather data for the selected city
+    private ForecastResponse? forecastData; // 5-day forecast data for the selected city
     private string? selectedCity; // The city currently selected
 
     protected override async Task OnInitializedAsync()
@@ -68,7 +94,35 @@ else
             Console.WriteLine("Error retrieving weather data.");
             await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving weather data.", "error");
         }
+
+        // Clear any previous forecast data
+        forecastData = null; 
     }
+
+   private async Task ShowFiveDayForecast(string city)
+{
+    selectedCity = city; // Set the selected city for forecast
+    forecastData = await WeatherService.GetFiveDayForecastAsync(city); // Fetch forecast data
+
+    if (forecastData == null)
+    {
+        Console.WriteLine("Error retrieving forecast data.");
+        await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving forecast data.", "error");
+        return;
+    }
+
+    // Clear any previous weather data
+    weatherData = null;
+
+    // Filter forecast data to get only one entry per day
+    var dailyForecasts = forecastData.list
+        .GroupBy(f => DateTime.Parse(f.dt_txt).Date) // Group by date
+        .Select(g => g.First()) // Take the first entry of each group
+        .ToList();
+
+    forecastData.list = dailyForecasts; // Update the list in forecastData
+}
+
 
     private async Task DeleteCity(string city)
     {
@@ -89,6 +143,7 @@ else
                 {
                     selectedCity = null;
                     weatherData = null;
+                    forecastData = null; // Clear forecast data as well
                 }
             }
             else
@@ -104,4 +159,182 @@ else
             await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while removing the city.", "error");
         }
     }
+
+    private void CloseWeather()
+    {
+        // Clear selected city and weather data when closing the weather view
+        selectedCity = null;
+        weatherData = null;
+    }
+
+    private void CloseForecast()
+    {
+        // Clear selected city and forecast data when closing the forecast view
+        selectedCity = null;
+        forecastData = null;
+    }
 }
+
+<style>
+    /* General styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #e9ecef;
+        color: #343a40;
+    }
+
+    .app-container {
+        margin: 20px auto;
+        padding: 30px;
+        max-width: 600px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease;
+    }
+
+    .app-container:hover {
+        transform: scale(1.02);
+    }
+
+    .app-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .app-header h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+        color: #007bff;
+    }
+
+    .app-header p {
+        color: #6c757d;
+    }
+
+    .app-empty-message {
+        text-align: center;
+        font-size: 18px;
+        color: #6c757d;
+    }
+
+    .app-city-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .app-city-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0;
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        background-color: #f1f1f1;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .app-city-item:hover {
+        background-color: #e7f0ff;
+    }
+
+    .app-city-button, .app-delete-button, .app-forecast-button, .app-back-button {
+        border: none;
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .app-city-button {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .app-city-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.05);
+    }
+
+    .app-delete-button {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .app-delete-button:hover {
+        background-color: #c82333;
+        transform: scale(1.05);
+    }
+
+    .app-forecast-button {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .app-forecast-button:hover {
+        background-color: #218838;
+        transform: scale(1.05);
+    }
+
+    .app-weather-container {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        background-color: #f1f1f1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-weather-info {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .app-weather-icon {
+        width: 100px;
+    }
+
+    .app-forecast-container {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        background-color: #f1f1f1;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .forecast-list {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .app-forecast-item {
+        border: 1px solid #007bff;
+        border-radius: 5px;
+        padding: 20px;
+        margin: 10px;
+        background-color: #f9f9f9;
+        width: 200px;
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    .app-forecast-item:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-back-button {
+        margin-top: 15px;
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .app-back-button:hover {
+        background-color: #5a6268;
+    }
+</style>

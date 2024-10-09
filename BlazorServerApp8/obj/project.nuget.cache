@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kCBDeXQ/aFY=",
+  "dgSpecHash": "6UiDHs6kn3Q=",
   "success": true,
-  "projectFilePath": "C:\\servernew\\BlazorServerApp8\\BlazorServerApp8.csproj",
+  "projectFilePath": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\santh\\.nuget\\packages\\blazored.localstorage\\4.5.0\\blazored.localstorage.4.5.0.nupkg.sha512",
     "C:\\Users\\santh\\.nuget\\packages\\microsoft.aspnetcore.authorization\\6.0.0\\microsoft.aspnetcore.authorization.6.0.0.nupkg.sha512",

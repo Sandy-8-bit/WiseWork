@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\servernew\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
+    "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj": {}
   },
   "projects": {
-    "C:\\servernew\\BlazorServerApp8\\BlazorServerApp8.csproj": {
+    "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\servernew\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectUniqueName": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj",
         "projectName": "BlazorServerApp8",
-        "projectPath": "C:\\servernew\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectPath": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj",
         "packagesPath": "C:\\Users\\santh\\.nuget\\packages\\",
-        "outputPath": "C:\\servernew\\BlazorServerApp8\\obj\\",
+        "outputPath": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santh\\AppData\\Roaming\\NuGet\\NuGet.Config",

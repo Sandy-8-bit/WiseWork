@@ -16,7 +16,7 @@ public class WeatherService
         _httpClient = httpClient;
     }
 
-    // Fetch weather data by city
+    // Fetch current weather data by city
     public async Task<WeatherResponse?> GetWeatherAsync(string city)
     {
         var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric");
@@ -33,7 +33,24 @@ public class WeatherService
         }
     }
 
-    // Fetch weather data for a city from favorite list
+    // Fetch 5-day weather forecast for a city
+    public async Task<ForecastResponse?> GetFiveDayForecastAsync(string city)
+    {
+        var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apiKey}&units=metric");
+
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadFromJsonAsync<ForecastResponse>();
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Error: {response.StatusCode}, Content: {content}");
+            return null;
+        }
+    }
+
+    // Fetch weather data for a city from the favorite list
     public async Task<WeatherResponse?> GetWeatherFromFavoriteCity(string city)
     {
         return await GetWeatherAsync(city); // Reusing GetWeatherAsync method
