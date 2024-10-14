@@ -111,6 +111,7 @@ else if (weatherData != null)
         {
             error = true;
             Console.WriteLine($"Error fetching weather data: {ex.Message}");
+            console.WriteLine("error");
         }
         finally
         {
