@@ -1,38 +1,45 @@
 @page "/favorite-cities"
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject WeatherService WeatherService
 @inject NavigationManager NavigationManager
-@using BlazorWasmApp.Models
+@inject MongoDBService MongoDBService
 @inject IJSRuntime JSRuntime
+@using BlazorWasmApp.Models
 
 <div class="app-container">
     <div class="app-header">
         <h1>Your Favorite Cities</h1>
-        <p>Select a city below to view its current weather or remove it from your list.</p>
+        <p>Click on a city to view detailed weather information or remove it from your list.</p>
     </div>
 
-    @if (favoriteCities == null || !favoriteCities.Any())
+    @if (favoriteCities != null && favoriteCities.Any())
     {
-        <p class="app-empty-message">No favorite cities found. Add some to get started!</p>
+        <div class="app-city-list">
+            @foreach (var favorite in favoriteCities)
+            {
+                <div class="app-city-item">
+                    <div>
+                        <h4>@favorite</h4>
+                        @if (cityWeatherData.ContainsKey(favorite))
+                        {
+                            <p><strong>Temp:</strong> @cityWeatherData[favorite].main.temp °C</p>
+                            <p><strong>Desc:</strong> @cityWeatherData[favorite].weather.First().description</p>
+                        }
+                        else
+                        {
+                            <p>Loading weather...</p>
+                        }
+                    </div>
+                    <div>
+                        <button class="app-city-button" @onclick="() => ShowWeather(favorite)">Details</button>
+                        <button class="app-delete-button" @onclick="() => DeleteCity(favorite)">Remove</button>
+                    </div>
+                </div>
+            }
+        </div>
     }
     else
     {
-        <ul class="app-city-list">
-            @foreach (var favoriteCity in favoriteCities)
-            {
-                <li class="app-city-item">
-                    <button class="app-city-button" @onclick="@(() => ShowWeather(favoriteCity))">
-                        <i class="fas fa-city"></i> @favoriteCity
-                    </button>
-                    <button class="app-delete-button" @onclick="@(() => DeleteCity(favoriteCity))">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                    <button class="app-forecast-button" @onclick="@(() => ShowFiveDayForecast(favoriteCity))">
-                        <i class="fas fa-calendar-alt"></i> 5-Day Forecast
-                    </button>
-                </li>
-            }
-        </ul>
+        <p class="app-empty-message">You have no favorite cities. Add some to view their weather here!</p>
     }
 
     @if (selectedCity != null && weatherData != null)
@@ -48,293 +55,106 @@
             <button class="app-back-button" @onclick="CloseWeather">Close</button>
         </div>
     }
-
-    @if (forecastData != null)
-{
-    <div class="app-forecast-container">
-        <h3>5-Day Forecast for @selectedCity</h3>
-        <button class="app-back-button" @onclick="CloseForecast">Close</button>
-        <div class="forecast-list">
-            @foreach (var day in forecastData.list)
-            {
-                <div class="app-forecast-item">
-                    <h4>@DateTime.Parse(day.dt_txt).ToString("dddd")</h4>
-                    <p>Temp: @day.main.temp °C</p>
-                    <p>Humidity: @day.main.humidity %</p>
-                    <p>@day.weather.First().description</p>
-                    <img src="https://openweathermap.org/img/w/@($"{day.weather.First().icon}.png")" 
-                         alt="Weather Icon" style="width: 50px; margin-top: 10px;" />
-                </div>
-            }
-        </div>
-    </div>
-}
-
 </div>
 
 @code {
-    private List<string>? favoriteCities; // List of favorite cities
-    private WeatherResponse? weatherData; // Weather data for the selected city
-    private ForecastResponse? forecastData; // 5-day forecast data for the selected city
-    private string? selectedCity; // The city currently selected
+    private List<string>? favoriteCities; // List of favorite city names
+    private Dictionary<string, WeatherResponse> cityWeatherData = new(); // City weather data cache
+    private WeatherResponse? weatherData; // Detailed weather data for selected city
+    private string? selectedCity; // The currently selected city
 
     protected override async Task OnInitializedAsync()
     {
-        // Get the list of favorite cities from local storage
-        favoriteCities = await localStorage.GetItemAsync<List<string>>("favoriteCities") ?? new List<string>();
+        try
+        {
+            // Fetch favorite cities from MongoDB and map to List<string> (city names)
+            var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync();
+            favoriteCities = favoriteCityObjects.Select(city => city.Name).ToList(); // Map to List<string> with city names
+
+            // Load weather preview for each city
+            if (favoriteCities.Any())
+            {
+                foreach (var city in favoriteCities)
+                {
+                    await LoadWeatherPreview(city);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading favorite cities: {ex.Message}");
+        }
+    }
+
+    private async Task LoadWeatherPreview(string city)
+    {
+        try
+        {
+            // Fetch weather data for each city to show a preview
+            var weather = await WeatherService.GetWeatherAsync(city);
+            if (weather != null)
+            {
+                cityWeatherData[city] = weather; // Cache weather data for each city
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading weather for {city}: {ex.Message}");
+        }
     }
 
     private async Task ShowWeather(string city)
     {
-        selectedCity = city; // Set the selected city
-        weatherData = await WeatherService.GetWeatherAsync(city); // Fetch weather data
-
-        if (weatherData == null)
+        try
         {
-            Console.WriteLine("Error retrieving weather data.");
-            await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving weather data.", "error");
+            // Show detailed weather data for the selected city
+            selectedCity = city;
+            weatherData = await WeatherService.GetWeatherAsync(city);
+
+            if (weatherData == null)
+            {
+                Console.WriteLine("Error retrieving weather data.");
+                await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving weather data.", "error");
+            }
         }
-
-        // Clear any previous forecast data
-        forecastData = null; 
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error showing weather: {ex.Message}");
+        }
     }
-
-   private async Task ShowFiveDayForecast(string city)
-{
-    selectedCity = city; // Set the selected city for forecast
-    forecastData = await WeatherService.GetFiveDayForecastAsync(city); // Fetch forecast data
-
-    if (forecastData == null)
-    {
-        Console.WriteLine("Error retrieving forecast data.");
-        await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving forecast data.", "error");
-        return;
-    }
-
-    // Clear any previous weather data
-    weatherData = null;
-
-    // Filter forecast data to get only one entry per day
-    var dailyForecasts = forecastData.list
-        .GroupBy(f => DateTime.Parse(f.dt_txt).Date) // Group by date
-        .Select(g => g.First()) // Take the first entry of each group
-        .ToList();
-
-    forecastData.list = dailyForecasts; // Update the list in forecastData
-}
-
 
     private async Task DeleteCity(string city)
     {
         try
         {
+            // Remove city from favorites and delete weather data
             if (favoriteCities != null && favoriteCities.Contains(city))
             {
-                favoriteCities.Remove(city); // Remove the city from the list
+                await MongoDBService.RemoveFavoriteCityAsync(city); // Remove from MongoDB
+                favoriteCities.Remove(city); // Remove from local list
+                cityWeatherData.Remove(city); // Remove cached weather data
 
-                // Update the list in local storage
-                await localStorage.SetItemAsync("favoriteCities", favoriteCities);
-
-                // Show success message
-                await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been removed from favorites.", "success");
-
-                // If the deleted city is currently displayed, clear the weather data
+                // If the selected city is removed, clear the selection
                 if (selectedCity == city)
                 {
                     selectedCity = null;
                     weatherData = null;
-                    forecastData = null; // Clear forecast data as well
                 }
-            }
-            else
-            {
-                // Show info if city is not found
-                await JSRuntime.InvokeVoidAsync("showToast", "City not found in favorites.", "info");
+
+                await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been removed from favorites.", "success");
             }
         }
         catch (Exception ex)
         {
-            // Show error message if something goes wrong
-            Console.WriteLine($"Error removing city from favorites: {ex.Message}");
-            await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while removing the city.", "error");
+            Console.WriteLine($"Error removing city: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("showToast", "Error removing city.", "error");
         }
     }
 
     private void CloseWeather()
     {
-        // Clear selected city and weather data when closing the weather view
+        // Close the detailed weather view
         selectedCity = null;
         weatherData = null;
     }
-
-    private void CloseForecast()
-    {
-        // Clear selected city and forecast data when closing the forecast view
-        selectedCity = null;
-        forecastData = null;
-    }
 }
-
-<style>
-    /* General styles */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #e9ecef;
-        color: #343a40;
-    }
-
-    .app-container {
-        margin: 20px auto;
-        padding: 30px;
-        max-width: 600px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        transition: transform 0.3s ease;
-    }
-
-    .app-container:hover {
-        transform: scale(1.02);
-    }
-
-    .app-header {
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .app-header h1 {
-        font-size: 28px;
-        margin-bottom: 10px;
-        color: #007bff;
-    }
-
-    .app-header p {
-        color: #6c757d;
-    }
-
-    .app-empty-message {
-        text-align: center;
-        font-size: 18px;
-        color: #6c757d;
-    }
-
-    .app-city-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .app-city-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 15px 0;
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        background-color: #f1f1f1;
-        padding: 10px;
-        transition: background-color 0.3s ease;
-    }
-
-    .app-city-item:hover {
-        background-color: #e7f0ff;
-    }
-
-    .app-city-button, .app-delete-button, .app-forecast-button, .app-back-button {
-        border: none;
-        border-radius: 5px;
-        padding: 10px 15px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .app-city-button {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .app-city-button:hover {
-        background-color: #0056b3;
-        transform: scale(1.05);
-    }
-
-    .app-delete-button {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .app-delete-button:hover {
-        background-color: #c82333;
-        transform: scale(1.05);
-    }
-
-    .app-forecast-button {
-        background-color: #28a745;
-        color: white;
-    }
-
-    .app-forecast-button:hover {
-        background-color: #218838;
-        transform: scale(1.05);
-    }
-
-    .app-weather-container {
-        margin-top: 20px;
-        padding: 20px;
-        border: 1px solid #007bff;
-        border-radius: 10px;
-        background-color: #f1f1f1;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .app-weather-info {
-        margin: 5px 0;
-        font-size: 16px;
-    }
-
-    .app-weather-icon {
-        width: 100px;
-    }
-
-    .app-forecast-container {
-        margin-top: 30px;
-        padding: 20px;
-        border: 1px solid #007bff;
-        border-radius: 10px;
-        background-color: #f1f1f1;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .forecast-list {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .app-forecast-item {
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        padding: 20px;
-        margin: 10px;
-        background-color: #f9f9f9;
-        width: 200px;
-        text-align: center;
-        transition: transform 0.2s ease;
-    }
-
-    .app-forecast-item:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    }
-
-    .app-back-button {
-        margin-top: 15px;
-        background-color: #6c757d;
-        color: white;
-    }
-
-    .app-back-button:hover {
-        background-color: #5a6268;
-    }
-</style>

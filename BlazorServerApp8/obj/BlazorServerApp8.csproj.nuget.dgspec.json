@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj": {}
+    "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
   },
   "projects": {
-    "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj": {
+    "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj",
+        "projectUniqueName": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "projectName": "BlazorServerApp8",
-        "projectPath": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\BlazorServerApp8.csproj",
+        "projectPath": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "packagesPath": "C:\\Users\\santh\\.nuget\\packages\\",
-        "outputPath": "C:\\WiseWork\\WiseWork\\blazorserverapp8\\obj\\",
+        "outputPath": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santh\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -46,9 +46,17 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "AspNetCore.Identity.Mongo": {
+              "target": "Package",
+              "version": "[9.1.2, )"
+            },
             "Blazored.LocalStorage": {
               "target": "Package",
               "version": "[4.5.0, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[3.1.0, )"
             }
           },
           "imports": [

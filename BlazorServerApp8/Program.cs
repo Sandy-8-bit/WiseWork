@@ -9,6 +9,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<WeatherService>(); // Assuming WeatherService is defined
+builder.Services.AddSingleton<MongoDBService>();
 
 // Register HttpClient for dependency injection
 builder.Services.AddHttpClient(); // This registers HttpClient with the default settings
