@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "D:\\New folder (2)\\BlazorServerApp8\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -19,20 +27,12 @@
       "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:shared\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\supabase\\clientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:supabase\\clientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -90,11 +90,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "Weather.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Weather.razor",
               "RelativeDocumentMoniker": "Pages\\Weather.razor",
@@ -103,12 +103,11 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-01-20T09:08:07.071Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ClientOptions.cs",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Supabase\\ClientOptions.cs",
               "RelativeDocumentMoniker": "Supabase\\ClientOptions.cs",
@@ -117,18 +116,17 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-01-21T07:33:45.647Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "FavoriteCities.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FavoriteCities.razor",
               "RelativeDocumentMoniker": "Pages\\FavoriteCities.razor",
               "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FavoriteCities.razor",
               "RelativeToolTip": "Pages\\FavoriteCities.razor",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAuwHMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABcAAAAAAAAAAAAwwBkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-01-20T07:00:43.491Z",
               "IsPinned": true,
@@ -136,7 +134,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Index.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Index.razor",
               "RelativeDocumentMoniker": "Pages\\Index.razor",
@@ -144,12 +142,11 @@
               "RelativeToolTip": "Pages\\Index.razor",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-21T15:35:45.767Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-21T15:35:45.767Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "NavMenu.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\NavMenu.razor",
               "RelativeDocumentMoniker": "Shared\\NavMenu.razor",
@@ -157,25 +154,24 @@
               "RelativeToolTip": "Shared\\NavMenu.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-01-21T04:52:45.444Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-21T04:52:45.444Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MainLayout.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\MainLayout.razor",
               "RelativeDocumentMoniker": "Shared\\MainLayout.razor",
               "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\MainLayout.razor",
               "RelativeToolTip": "Shared\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-01-21T14:57:19.986Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "SupabaseAuthService.cs",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Services\\SupabaseAuthService.cs",
               "RelativeDocumentMoniker": "Services\\SupabaseAuthService.cs",
@@ -188,7 +184,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 1,
               "Title": "Login.razor",
               "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Login.razor",
               "RelativeDocumentMoniker": "Pages\\Login.razor",

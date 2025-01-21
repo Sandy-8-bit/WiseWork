@@ -11,7 +11,6 @@
         <h1>Your Favorite Cities</h1>
         <p>Click on a city to view detailed weather information or remove it from your list.</p>
     </div>
-    <button @onclick="LogoutAsync">Logout</button>
 
     @if (favoriteCities == null)
     {
@@ -183,11 +182,7 @@
         }
     }
 
-    private async Task LogoutAsync()
-    {
-        await AuthService.LogoutAsync();
-        NavigationManager.NavigateTo("/login");
-    }
+  
 
     private void CloseWeather()
     {
