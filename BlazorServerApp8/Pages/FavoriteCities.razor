@@ -1,15 +1,23 @@
 @page "/favorite-cities"
+@using BlazorWasmApp.Models
 @inject WeatherService WeatherService
 @inject NavigationManager NavigationManager
 @inject MongoDBService MongoDBService
 @inject IJSRuntime JSRuntime
-@using BlazorWasmApp.Models
+@inject SupabaseAuthService AuthService
 
 <div class="app-container">
     <div class="app-header">
         <h1>Your Favorite Cities</h1>
         <p>Click on a city to view detailed weather information or remove it from your list.</p>
     </div>
+    <button @onclick="LogoutAsync">Logout</button>
+
+    @if (favoriteCities == null)
+    {
+        <p>Loading your favorite cities...</p>
+    }
+    <p>Debug: Favorite Cities Count: @favoriteCities?.Count</p>
 
     @if (favoriteCities != null && favoriteCities.Any())
     {
@@ -21,8 +29,9 @@
                         <h4>@favorite</h4>
                         @if (cityWeatherData.ContainsKey(favorite))
                         {
-                            <p><strong>Temp:</strong> @cityWeatherData[favorite].main.temp °C</p>
-                            <p><strong>Desc:</strong> @cityWeatherData[favorite].weather.First().description</p>
+                            var weather = cityWeatherData[favorite];
+                            <p><strong>Temp:</strong> @weather.main.temp °C</p>
+                            <p><strong>Desc:</strong> @weather.weather.FirstOrDefault()?.description</p>
                         }
                         else
                         {
@@ -45,40 +54,66 @@
     @if (selectedCity != null && weatherData != null)
     {
         <div class="app-weather-container">
-            <h2>Weather in @weatherData.name</h2>
-            <p class="app-weather-info"><strong>Temperature:</strong> @weatherData.main.temp °C</p>
-            <p class="app-weather-info"><strong>Feels Like:</strong> @weatherData.main.feels_like °C</p>
-            <p class="app-weather-info"><strong>Humidity:</strong> @weatherData.main.humidity %</p>
-            <p class="app-weather-info"><strong>Description:</strong> @weatherData.weather.First().description</p>
-            <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
-                 alt="Weather Icon" class="app-weather-icon" />
-            <button class="app-back-button" @onclick="CloseWeather">Close</button>
+            <h2>Weather in @weatherData?.name</h2>
+            <p><strong>Temperature:</strong> @weatherData?.main?.temp °C</p>
+            <p><strong>Feels Like:</strong> @weatherData?.main?.feels_like °C</p>
+            <p><strong>Humidity:</strong> @weatherData?.main?.humidity %</p>
+            <p><strong>Description:</strong> @weatherData?.weather?.FirstOrDefault()?.description</p>
+            <img src="https://openweathermap.org/img/w/@($"{weatherData?.weather?.FirstOrDefault()?.icon}.png")"
+                 alt="Weather Icon" />
+            <button @onclick="CloseWeather">Close</button>
         </div>
     }
 </div>
 
 @code {
-    private List<string>? favoriteCities; // List of favorite city names
-    private Dictionary<string, WeatherResponse> cityWeatherData = new(); // City weather data cache
-    private WeatherResponse? weatherData; // Detailed weather data for selected city
-    private string? selectedCity; // The currently selected city
+    private List<string>? favoriteCities;
+    private Dictionary<string, WeatherResponse> cityWeatherData = new();
+    private WeatherResponse? weatherData;
+    private string? selectedCity;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            // Fetch favorite cities from MongoDB and map to List<string> (city names)
-            var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync();
-            favoriteCities = favoriteCityObjects.Select(city => city.Name).ToList(); // Map to List<string> with city names
+            var user = AuthService.GetCurrentUser();
+            if (user == null)
+            {
+                Console.WriteLine("User not logged in.");
+                NavigationManager.NavigateTo("/login");
+                return;
+            }
 
-            // Load weather preview for each city
-            if (favoriteCities.Any())
+            // Retrieve cities associated with the logged-in user ID
+            var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync(user.Id!);
+
+            if (favoriteCityObjects != null && favoriteCityObjects.Any())
+            {
+                Console.WriteLine("Favorite cities retrieved from MongoDB:");
+                foreach (var city in favoriteCityObjects)
+                {
+                    Console.WriteLine($"- {city.CityName}");
+                }
+                favoriteCities = favoriteCityObjects
+                    .Where(city => !string.IsNullOrEmpty(city.CityName))
+                    .Select(city => city.CityName!)
+                    .ToList();
+            }
+            else
+            {
+                Console.WriteLine("No favorite cities found for the user.");
+            }
+
+            Console.WriteLine("Favorite cities list: " + (favoriteCities?.Count.ToString() ?? "No cities found"));
+
+            if (favoriteCities != null && favoriteCities.Any())
             {
                 foreach (var city in favoriteCities)
                 {
                     await LoadWeatherPreview(city);
                 }
             }
+
         }
         catch (Exception ex)
         {
@@ -86,15 +121,23 @@
         }
     }
 
+
     private async Task LoadWeatherPreview(string city)
     {
+        if (string.IsNullOrEmpty(city)) return;
+
         try
         {
-            // Fetch weather data for each city to show a preview
+            Console.WriteLine($"Fetching weather for {city}...");
             var weather = await WeatherService.GetWeatherAsync(city);
             if (weather != null)
             {
-                cityWeatherData[city] = weather; // Cache weather data for each city
+                cityWeatherData[city] = weather;
+                Console.WriteLine($"Weather data for {city} loaded.");
+            }
+            else
+            {
+                Console.WriteLine($"Weather data for {city} not found.");
             }
         }
         catch (Exception ex)
@@ -103,19 +146,13 @@
         }
     }
 
+
     private async Task ShowWeather(string city)
     {
         try
         {
-            // Show detailed weather data for the selected city
             selectedCity = city;
             weatherData = await WeatherService.GetWeatherAsync(city);
-
-            if (weatherData == null)
-            {
-                Console.WriteLine("Error retrieving weather data.");
-                await JSRuntime.InvokeVoidAsync("showToast", "Error retrieving weather data.", "error");
-            }
         }
         catch (Exception ex)
         {
@@ -127,33 +164,33 @@
     {
         try
         {
-            // Remove city from favorites and delete weather data
-            if (favoriteCities != null && favoriteCities.Contains(city))
+            var user = AuthService.GetCurrentUser();
+            if (user == null) return;
+
+            await MongoDBService.RemoveFavoriteCityAsync(user.Id!, city);
+            favoriteCities?.Remove(city);
+            cityWeatherData.Remove(city);
+
+            if (selectedCity == city)
             {
-                await MongoDBService.RemoveFavoriteCityAsync(city); // Remove from MongoDB
-                favoriteCities.Remove(city); // Remove from local list
-                cityWeatherData.Remove(city); // Remove cached weather data
-
-                // If the selected city is removed, clear the selection
-                if (selectedCity == city)
-                {
-                    selectedCity = null;
-                    weatherData = null;
-                }
-
-                await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been removed from favorites.", "success");
+                selectedCity = null;
+                weatherData = null;
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error removing city: {ex.Message}");
-            await JSRuntime.InvokeVoidAsync("showToast", "Error removing city.", "error");
         }
+    }
+
+    private async Task LogoutAsync()
+    {
+        await AuthService.LogoutAsync();
+        NavigationManager.NavigateTo("/login");
     }
 
     private void CloseWeather()
     {
-        // Close the detailed weather view
         selectedCity = null;
         weatherData = null;
     }

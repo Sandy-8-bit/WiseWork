@@ -1,7 +1,9 @@
 using BlazorServerApp8.Data;
 using Blazored.LocalStorage;
 using System.Net.Http;
-
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -10,6 +12,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<WeatherService>(); // Assuming WeatherService is defined
 builder.Services.AddSingleton<MongoDBService>();
+builder.Services.AddSingleton<SupabaseAuthService>();
 
 // Register HttpClient for dependency injection
 builder.Services.AddHttpClient(); // This registers HttpClient with the default settings

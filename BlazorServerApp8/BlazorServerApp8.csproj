@@ -9,7 +9,11 @@
   <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="9.1.2" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="gotrue-csharp" Version="4.3.1" />
+    <PackageReference Include="MongoDB.Bson" Version="3.1.0" />
     <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+    <PackageReference Include="MongoDB.Driver.Core" Version="2.30.0" />
+    <PackageReference Include="Supabase" Version="1.1.1" />
   </ItemGroup>
 
 </Project>

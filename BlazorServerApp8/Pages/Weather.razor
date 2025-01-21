@@ -4,6 +4,7 @@
 @using BlazorWasmApp.Models
 @inject IJSRuntime JSRuntime
 @inject MongoDBService MongoDBService
+@inject SupabaseAuthService AuthService
 
 <h3 style="text-align:center; margin: 20px;">Weather Information</h3>
 
@@ -17,6 +18,10 @@
     </button>
 </div>
 
+@if (AuthService.GetCurrentUser() == null)
+{
+    NavigationManager.NavigateTo("/login");
+}
 @if (isLoading)
 {
     <p style="text-align:center; font-size: 18px; color: #007bff;">Loading...</p>
@@ -37,11 +42,12 @@ else if (weatherData != null)
         <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" 
              alt="Weather Icon" style="width: 100px; margin: 10px 0;" />
 
-        <button @onclick="AddToFavorites" 
-                style="padding: 10px 15px; font-size: 16px; background-color: #28a745; color: white; 
-                       border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+        <button @onclick="() => AddToFavorites(city)"
+                style="padding: 10px 15px; font-size: 16px; background-color: #28a745; color: white;
+               border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
             Add to Favorites
         </button>
+
 
         <button @onclick="ShowFiveDayForecast" 
                 style="padding: 10px 15px; font-size: 16px; background-color: #17a2b8; color: white; 
@@ -118,27 +124,29 @@ else if (weatherData != null)
         }
     }
 
-    private async Task AddToFavorites()
+    private async Task AddToFavorites(string city)
     {
         try
         {
-            if (!string.IsNullOrEmpty(city))
+            var user = AuthService.GetCurrentUser();
+            if (user == null)
             {
-                await MongoDBService.AddFavoriteCityAsync(city);
-                Console.WriteLine("City added to MongoDB favorites.");
-
-                // Show success message
-                await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been added to favorites.", "success");
+                Console.WriteLine("User is not logged in.");
+                return;
             }
+
+            var userId = user.Id; // Get the logged-in user's ID
+
+            await MongoDBService.AddFavoriteCityAsync(userId!, city); // Pass userId and cityName
+            await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been added to favorites.", "success");
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error adding to MongoDB favorites: {ex.Message}");
-            
-            // Show error message
-            await JSRuntime.InvokeVoidAsync("showToast", "An error occurred while adding to favorites.", "error");
+            Console.WriteLine($"Error adding city to favorites: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("showToast", "Error adding city to favorites.", "error");
         }
     }
+
 
     private async Task ShowFiveDayForecast()
     {

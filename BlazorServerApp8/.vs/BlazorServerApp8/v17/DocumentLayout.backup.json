@@ -1,0 +1,351 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\New folder (2)\\BlazorServerApp8\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:services\\supabaseauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:shared\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\index.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\shared\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:shared\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\favoritecities.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\weather.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\supabase\\clientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:supabase\\clientoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:services\\mongodbservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\services\\weatherservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:services\\weatherservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\models\\weatherresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:models\\weatherresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\data\\weatherforecastservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:data\\weatherforecastservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\data\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:data\\weatherforecast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\pages\\fetchdata.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:pages\\fetchdata.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|d:\\new folder (2)\\blazorserverapp8\\wwwroot\\js\\toast.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{2AA22CFD-A477-4BD2-AF1E-862C3D671102}|BlazorServerApp8.csproj|solutionrelative:wwwroot\\js\\toast.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 6,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Weather.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Weather.razor",
+              "RelativeDocumentMoniker": "Pages\\Weather.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Weather.razor",
+              "RelativeToolTip": "Pages\\Weather.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIcAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-20T09:08:07.071Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ClientOptions.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Supabase\\ClientOptions.cs",
+              "RelativeDocumentMoniker": "Supabase\\ClientOptions.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Supabase\\ClientOptions.cs",
+              "RelativeToolTip": "Supabase\\ClientOptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T07:33:45.647Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FavoriteCities.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FavoriteCities.razor",
+              "RelativeDocumentMoniker": "Pages\\FavoriteCities.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FavoriteCities.razor",
+              "RelativeToolTip": "Pages\\FavoriteCities.razor",
+              "ViewState": "AgIAAF4AAAAAAAAAAAAuwHMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-20T07:00:43.491Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Index.razor",
+              "RelativeDocumentMoniker": "Pages\\Index.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Index.razor",
+              "RelativeToolTip": "Pages\\Index.razor",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAG8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-21T15:35:45.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Shared\\NavMenu.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\NavMenu.razor",
+              "RelativeToolTip": "Shared\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-21T04:52:45.444Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Shared\\MainLayout.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Shared\\MainLayout.razor",
+              "RelativeToolTip": "Shared\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-21T14:57:19.986Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SupabaseAuthService.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Services\\SupabaseAuthService.cs",
+              "RelativeDocumentMoniker": "Services\\SupabaseAuthService.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Services\\SupabaseAuthService.cs",
+              "RelativeToolTip": "Services\\SupabaseAuthService.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAAAkAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T04:00:38.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Login.razor",
+              "RelativeDocumentMoniker": "Pages\\Login.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\Login.razor",
+              "RelativeToolTip": "Pages\\Login.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-21T06:54:34.467Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "WeatherResponse.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Models\\WeatherResponse.cs",
+              "RelativeDocumentMoniker": "Models\\WeatherResponse.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Models\\WeatherResponse.cs",
+              "RelativeToolTip": "Models\\WeatherResponse.cs",
+              "ViewState": "AgIAAFcAAAAAAAAAAAAIwGkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T04:01:35.715Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "WeatherForecast.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Data\\WeatherForecast.cs",
+              "RelativeDocumentMoniker": "Data\\WeatherForecast.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Data\\WeatherForecast.cs",
+              "RelativeToolTip": "Data\\WeatherForecast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T04:01:31.802Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "MongoDBService.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Services\\MongoDBService.cs",
+              "RelativeDocumentMoniker": "Services\\MongoDBService.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Services\\MongoDBService.cs",
+              "RelativeToolTip": "Services\\MongoDBService.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAuwB0AAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T06:58:01.839Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WeatherForecastService.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Data\\WeatherForecastService.cs",
+              "RelativeDocumentMoniker": "Data\\WeatherForecastService.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Data\\WeatherForecastService.cs",
+              "RelativeToolTip": "Data\\WeatherForecastService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T09:56:19.977Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "WeatherServices.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Services\\WeatherServices.cs",
+              "RelativeDocumentMoniker": "Services\\WeatherServices.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Services\\WeatherServices.cs",
+              "RelativeToolTip": "Services\\WeatherServices.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAqwIAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-21T03:50:10.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-20T09:38:50.663Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-20T09:35:43.545Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "FetchData.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FetchData.razor",
+              "RelativeDocumentMoniker": "Pages\\FetchData.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\Pages\\FetchData.razor",
+              "RelativeToolTip": "Pages\\FetchData.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-21T04:01:17.941Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\_Imports.razor",
+              "RelativeDocumentMoniker": "_Imports.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\_Imports.razor",
+              "RelativeToolTip": "_Imports.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-20T09:35:45.642Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "App.razor",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\App.razor",
+              "RelativeDocumentMoniker": "App.razor",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\App.razor",
+              "RelativeToolTip": "App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-01-20T09:04:25.122Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-01-21T03:48:03.065Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "toast.js",
+              "DocumentMoniker": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\js\\toast.js",
+              "RelativeDocumentMoniker": "wwwroot\\js\\toast.js",
+              "ToolTip": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\js\\toast.js",
+              "RelativeToolTip": "wwwroot\\js\\toast.js",
+              "ViewState": "AgIAABUAAAAAAAAAAAAcwC0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-01-20T09:03:41.97Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

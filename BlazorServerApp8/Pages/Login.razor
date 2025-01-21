@@ -1,0 +1,101 @@
+﻿@page "/login"
+@inject SupabaseAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<h3>Login</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <p class="text-danger">@ErrorMessage</p>
+}
+
+@if (isLoading)
+{
+    <div class="text-center my-3">
+        <p>Loading...</p>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Loading_2.gif" alt="Loading" style="width: 50px;" />
+    </div>
+}
+else
+{
+    <div class="login-container">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input id="email" class="form-control" @bind="Email" type="email" placeholder="Enter your email" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input id="password" class="form-control" @bind="Password" type="password" placeholder="Enter your password" />
+        </div>
+        <div class="form-group text-center">
+            <button class="btn btn-primary" @onclick="LoginAsync" disabled="@isLoading">Login</button>
+        </div>
+        <div class="form-group text-center">
+            <button class="btn btn-secondary" @onclick="RegisterAsync" disabled="@isLoading">Register</button>
+        </div>
+    </div>
+}
+
+@code {
+    private string Email = string.Empty;
+    private string Password = string.Empty;
+    private string? ErrorMessage;
+    private bool isLoading = false;
+
+    private async Task LoginAsync()
+    {
+        Console.WriteLine($"Attempting to log in with email: {Email}");
+        isLoading = true;
+        ErrorMessage = null;
+
+        try
+        {
+            var user = await AuthService.LoginAsync(Email, Password);
+
+            if (user != null)
+            {
+                Console.WriteLine("Login successful. Navigating to weather page...");
+                NavigationManager.NavigateTo("/weather");
+            }
+            else
+            {
+                Console.WriteLine("LoginAsync returned null user.");
+                ErrorMessage = "Invalid email or password.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"LoginAsync exception: {ex}");
+            ErrorMessage = $"Login failed: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task RegisterAsync()
+    {
+        Console.WriteLine($"Attempting to register with email: {Email}");
+        isLoading = true;
+        ErrorMessage = null;
+
+        try
+        {
+            var user = await AuthService.RegisterAsync(Email, Password);
+            if (user != null)
+            {
+                Console.WriteLine("Registration successful. Navigating to weather page...");
+                NavigationManager.NavigateTo("/weather");
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Registration failed: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
+    "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
   },
   "projects": {
-    "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj": {
+    "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectUniqueName": "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "projectName": "BlazorServerApp8",
-        "projectPath": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectPath": "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "packagesPath": "C:\\Users\\santh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\santh\\source\\repos\\WiseWork\\BlazorServerApp8\\obj\\",
+        "outputPath": "D:\\New folder (2)\\BlazorServerApp8\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santh\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -54,9 +54,25 @@
               "target": "Package",
               "version": "[4.5.0, )"
             },
+            "MongoDB.Bson": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
             "MongoDB.Driver": {
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "MongoDB.Driver.Core": {
+              "target": "Package",
+              "version": "[2.30.0, )"
+            },
+            "Supabase": {
+              "target": "Package",
+              "version": "[1.1.1, )"
+            },
+            "gotrue-csharp": {
+              "target": "Package",
+              "version": "[4.3.1, )"
             }
           },
           "imports": [
