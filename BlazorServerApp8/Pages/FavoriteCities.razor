@@ -83,27 +83,15 @@
                 return;
             }
 
-            // Retrieve cities associated with the logged-in user ID
             var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync(user.Id!);
 
             if (favoriteCityObjects != null && favoriteCityObjects.Any())
             {
-                Console.WriteLine("Favorite cities retrieved from MongoDB:");
-                foreach (var city in favoriteCityObjects)
-                {
-                    Console.WriteLine($"- {city.CityName}");
-                }
                 favoriteCities = favoriteCityObjects
                     .Where(city => !string.IsNullOrEmpty(city.CityName))
                     .Select(city => city.CityName!)
                     .ToList();
             }
-            else
-            {
-                Console.WriteLine("No favorite cities found for the user.");
-            }
-
-            Console.WriteLine("Favorite cities list: " + (favoriteCities?.Count.ToString() ?? "No cities found"));
 
             if (favoriteCities != null && favoriteCities.Any())
             {
@@ -112,7 +100,6 @@
                     await LoadWeatherPreview(city);
                 }
             }
-
         }
         catch (Exception ex)
         {
@@ -120,23 +107,16 @@
         }
     }
 
-
     private async Task LoadWeatherPreview(string city)
     {
         if (string.IsNullOrEmpty(city)) return;
 
         try
         {
-            Console.WriteLine($"Fetching weather for {city}...");
             var weather = await WeatherService.GetWeatherAsync(city);
             if (weather != null)
             {
                 cityWeatherData[city] = weather;
-                Console.WriteLine($"Weather data for {city} loaded.");
-            }
-            else
-            {
-                Console.WriteLine($"Weather data for {city} not found.");
             }
         }
         catch (Exception ex)
@@ -144,7 +124,6 @@
             Console.WriteLine($"Error loading weather for {city}: {ex.Message}");
         }
     }
-
 
     private async Task ShowWeather(string city)
     {
@@ -182,11 +161,115 @@
         }
     }
 
-  
-
     private void CloseWeather()
     {
         selectedCity = null;
         weatherData = null;
     }
 }
+
+<style>
+    .app-container {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0 auto;
+        max-width: 1200px;
+    }
+
+    .app-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+        .app-header h1 {
+            color: #007bff;
+        }
+
+        .app-header p {
+            color: #6c757d;
+        }
+
+    .app-city-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    .app-city-item {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .app-city-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-city-item h4 {
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+    .app-city-button,
+    .app-delete-button {
+        padding: 8px 15px;
+        font-size: 14px;
+        color: white;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .app-city-button:hover,
+        .app-delete-button:hover {
+            background-color: #0056b3;
+        }
+
+    .app-empty-message {
+        text-align: center;
+        color: #6c757d;
+    }
+
+    .app-weather-container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+        text-align: center;
+    }
+
+        .app-weather-container h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .app-weather-container img {
+            width: 100px;
+            margin-top: 10px;
+        }
+
+        .app-weather-container button {
+            background-color: #dc3545;
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+            .app-weather-container button:hover {
+                background-color: #c82333;
+            }
+</style>

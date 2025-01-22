@@ -1,11 +1,16 @@
 ﻿using Supabase.Gotrue;
+using System.Text.Json;
+using Microsoft.JSInterop;
 
 public class SupabaseAuthService
 {
     private readonly Supabase.Client _client;
+    private readonly IJSRuntime _jsRuntime;
 
-    public SupabaseAuthService()
+    public SupabaseAuthService(IJSRuntime jsRuntime)
     {
+        _jsRuntime = jsRuntime;
+
         var options = new Supabase.ClientOptions
         {
             AutoRefreshToken = true,
@@ -21,7 +26,28 @@ public class SupabaseAuthService
 
     public async Task InitializeAsync()
     {
-        await _client.InitializeAsync();
+        // Check if JS runtime is available
+        if (_jsRuntime is not null)
+        {
+            await _client.InitializeAsync();
+
+            var sessionJson = await _jsRuntime.InvokeAsync<string>("localStorage.getItem", "supabaseSession");
+            if (!string.IsNullOrEmpty(sessionJson))
+            {
+                try
+                {
+                    var session = JsonSerializer.Deserialize<Session>(sessionJson);
+                    if (session != null)
+                    {
+                        await _client.Auth.SetSession(session.AccessToken, session.RefreshToken);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Failed to restore session: {ex.Message}");
+                }
+            }
+        }
     }
 
     public async Task<User?> LoginAsync(string email, string password)
@@ -29,12 +55,20 @@ public class SupabaseAuthService
         try
         {
             var session = await _client.Auth.SignIn(email, password);
-            return session?.User;
+
+            if (session != null)
+            {
+                var sessionJson = JsonSerializer.Serialize(session);
+                await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "supabaseSession", sessionJson);
+                return session.User;
+            }
+
+            return null;
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Login failed: {ex.Message}");
-            throw; // Rethrow the exception to propagate it
+            throw;
         }
     }
 
@@ -43,7 +77,15 @@ public class SupabaseAuthService
         try
         {
             var session = await _client.Auth.SignUp(email, password);
-            return session?.User;
+
+            if (session != null)
+            {
+                var sessionJson = JsonSerializer.Serialize(session);
+                await _jsRuntime.InvokeVoidAsync("localStorage.setItem", "supabaseSession", sessionJson);
+                return session.User;
+            }
+
+            return null;
         }
         catch (Exception ex)
         {
@@ -55,6 +97,7 @@ public class SupabaseAuthService
     public async Task LogoutAsync()
     {
         await _client.Auth.SignOut();
+        await _jsRuntime.InvokeVoidAsync("localStorage.removeItem", "supabaseSession");
     }
 
     public User? GetCurrentUser()

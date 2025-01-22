@@ -46,6 +46,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/New folder (2)/BlazorServerApp8/Pages/WeatherChat.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlckNoYXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/New folder (2)/BlazorServerApp8/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 

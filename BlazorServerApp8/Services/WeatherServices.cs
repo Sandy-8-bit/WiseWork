@@ -21,23 +21,18 @@ public class WeatherService
     // Fetch current weather data by city
     public async Task<WeatherResponse?> GetWeatherAsync(string city)
     {
-        // Check if the weather data is already cached
-        if (_weatherCache.ContainsKey(city))
-        {
-            Console.WriteLine($"Returning cached weather data for {city}.");
-            return _weatherCache[city];
-        }
-
         try
         {
+            Console.WriteLine($"Attempting to fetch weather for: {city}");
             var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric");
+
+            Console.WriteLine($"API Response Status: {response.StatusCode}");
 
             if (response.IsSuccessStatusCode)
             {
                 var weather = await response.Content.ReadFromJsonAsync<WeatherResponse>();
                 if (weather != null)
                 {
-                    // Cache the weather data for the city
                     _weatherCache[city] = weather;
                     return weather;
                 }
@@ -45,12 +40,13 @@ public class WeatherService
             else
             {
                 var content = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Error: {response.StatusCode}, Content: {content}");
+                Console.WriteLine($"API Error Response: {content}");
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error fetching weather data for {city}: {ex.Message}");
+            Console.WriteLine($"Exception in GetWeatherAsync: {ex.Message}");
+            Console.WriteLine($"Stack trace: {ex.StackTrace}");
         }
 
         return null;

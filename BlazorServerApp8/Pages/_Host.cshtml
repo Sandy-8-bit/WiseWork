@@ -7,3 +7,8 @@
 }
 
 <component type="typeof(App)" render-mode="ServerPrerendered" />
+<script>
+    window.scrollToBottom = (element) => {
+        element.scrollTop = element.scrollHeight;
+    }
+</script>

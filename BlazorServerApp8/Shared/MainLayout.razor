@@ -10,16 +10,16 @@
 
     <main>
         <div class="top-row px-4">
-            
             @if (AuthService.GetCurrentUser() != null)
             {
-                <span>Welcome, @AuthService.GetCurrentUser()?.Email</span>
-                <button @onclick="Logout">Logout</button>
+                <span class="welcome-message">Welcome, @AuthService.GetCurrentUser()?.Email</span>
+                <button @onclick="Logout" class="logout-button">Logout</button>
             }
             else
             {
-                <NavLink href="/login">Login</NavLink>
+                <NavLink href="/login" class="login-link">Login</NavLink>
             }
+            <NavLink href="/weatherchat" class="chat-link">Chat with us</NavLink>
         </div>
 
         <article class="content px-4">
@@ -29,10 +29,74 @@
 </div>
 
 @code {
+    private bool initialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !initialized)
+        {
+            await AuthService.InitializeAsync();
+            initialized = true;
+            StateHasChanged();
+        }
+    }
+
     private async Task Logout()
     {
         await AuthService.LogoutAsync();
         NavigationManager.NavigateTo("/login");
     }
-
 }
+
+<style>
+    .top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .top-row span {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .logout-button,
+    .login-link,
+    .chat-link {
+        padding: 10px 15px;
+        background-color: #28a745;
+        color: white;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+        margin-left: 10px;
+    }
+
+    .logout-button:hover,
+    .login-link:hover,
+    .chat-link:hover {
+        background-color: #218838;
+    }
+
+    .login-link {
+        background-color: #007bff;
+    }
+
+    .chat-link {
+        background-color: #17a2b8;
+    }
+
+    .welcome-message {
+        font-size: 18px;
+        margin-right: 20px;
+        color:black;
+    }
+</style>
