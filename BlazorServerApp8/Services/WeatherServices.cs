@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
+using System.Net.Mail;
+using System.Net;
 using BlazorWasmApp.Models;
 
 public class WeatherService
@@ -10,12 +12,16 @@ public class WeatherService
     private readonly HttpClient _httpClient;
     private readonly string apiKey = "0396fe1fc3e16a3fcca570677d66ae8d"; // Your OpenWeather API key
     private readonly Dictionary<string, WeatherResponse> _weatherCache = new(); // Cache for weather data
+    private readonly IConfiguration _configuration;
+    private readonly SupabaseAuthService _authService;
 
     public List<string> FavoriteCities { get; private set; } = new List<string>();
 
-    public WeatherService(HttpClient httpClient)
+    public WeatherService(HttpClient httpClient, IConfiguration configuration, SupabaseAuthService authService)
     {
         _httpClient = httpClient;
+        _configuration = configuration;
+        _authService = authService;  // Inject SupabaseAuthService here
     }
 
     // Fetch current weather data by city
@@ -34,6 +40,18 @@ public class WeatherService
                 if (weather != null)
                 {
                     _weatherCache[city] = weather;
+
+                    // Check if rain is present in the weather data
+                    if (weather.weather.Any(w => w.main == "Rain"))
+                    {
+                        var user = _authService.GetCurrentUser();  // Use the injected instance of SupabaseAuthService
+                        if (user != null)
+                        {
+                            // Send rain notification email
+                            await SendRainNotificationEmail(user.Email!, city, weather.weather.FirstOrDefault()?.description);
+                        }
+                    }
+
                     return weather;
                 }
             }
@@ -50,6 +68,35 @@ public class WeatherService
         }
 
         return null;
+    }
+
+    // Send a rain notification email to the user
+    private async Task SendRainNotificationEmail(string userEmail, string cityName, string? description)
+    {
+        try
+        {
+            var smtpClient = new SmtpClient(_configuration["EmailSettings:SmtpServer"])
+            {
+                Port = int.Parse(_configuration["EmailSettings:Port"]),
+                Credentials = new NetworkCredential(_configuration["EmailSettings:Username"], _configuration["EmailSettings:Password"]),
+                EnableSsl = true,
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(_configuration["EmailSettings:FromAddress"]),
+                Subject = $"Rain Alert for {cityName}",
+                Body = $"Hello, there is rain in {cityName}. Description: {description ?? "No description available"}. Please take necessary precautions.",
+                IsBodyHtml = true,
+            };
+
+            mailMessage.To.Add(userEmail);
+            await smtpClient.SendMailAsync(mailMessage);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error sending rain email: {ex.Message}");
+        }
     }
 
     // Fetch 5-day weather forecast for a city

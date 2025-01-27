@@ -39,7 +39,7 @@ public class SupabaseAuthService
                     var session = JsonSerializer.Deserialize<Session>(sessionJson);
                     if (session != null)
                     {
-                        await _client.Auth.SetSession(session.AccessToken, session.RefreshToken);
+                        await _client.Auth.SetSession(session.AccessToken!, session.RefreshToken!);
                     }
                 }
                 catch (Exception ex)

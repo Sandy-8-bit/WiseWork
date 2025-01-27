@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
+    "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
   },
   "projects": {
-    "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj": {
+    "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectUniqueName": "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "projectName": "BlazorServerApp8",
-        "projectPath": "D:\\New folder (2)\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectPath": "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "packagesPath": "C:\\Users\\santh\\.nuget\\packages\\",
-        "outputPath": "D:\\New folder (2)\\BlazorServerApp8\\obj\\",
+        "outputPath": "D:\\Paid project\\BlazorServerApp8\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santh\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[4.5.0, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.9.0, )"
+            },
             "MongoDB.Bson": {
               "target": "Package",
               "version": "[3.1.0, )"
@@ -65,6 +69,10 @@
             "MongoDB.Driver.Core": {
               "target": "Package",
               "version": "[2.30.0, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.1.0, )"
             },
             "Supabase": {
               "target": "Package",

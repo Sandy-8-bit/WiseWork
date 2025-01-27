@@ -1,23 +1,59 @@
 @page "/weather"
-@inject WeatherService WeatherService
-@inject NavigationManager NavigationManager
-@using BlazorWasmApp.Models
-@inject IJSRuntime JSRuntime
 @inject MongoDBService MongoDBService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
 @inject SupabaseAuthService AuthService
+@inject WeatherService WeatherService
+@using BlazorWasmApp.Models
 
-<h3 class="page-title">Weather Information</h3>
+<h2>Weather Dashboard</h2>
+
+<!-- Search Bar -->
 
 <div class="search-container">
-    <input type="text" @bind="city" placeholder="Enter city" class="search-input" />
-    <button @onclick="GetWeather" class="search-button">Search</button>
+    <div class="search-box">
+        <input type="text" @bind="city" placeholder="Enter city" class="search-input" />
+        <button @onclick="GetWeather" class="btn-search">Search</button>
+    </div>
 </div>
 
-@if (AuthService.GetCurrentUser() == null)
-{
-    NavigationManager.NavigateTo("/login");
-}
+<!-- Favorite Cities Section -->
+<div class="favorites-section">
+    <h3>Your Favorite Cities</h3>
+    @if (favoriteCities?.Any() == true)
+    {
+        <ul class="favorite-cities">
+            @foreach (var favorite in favoriteCities)
+            {
+                <li class="favorite-item">
+                    <div class="city-details">
+                        <strong>@favorite</strong>
+                        @if (cityWeatherData.ContainsKey(favorite))
+                        {
+                            <div class="weather-preview">
+                                <p>Temp: @cityWeatherData[favorite].main.temp °C</p>
+                                <p>@cityWeatherData[favorite].weather.First().description</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="actions">
+                        <button @onclick="() => RemoveCity(favorite)" class="btn-remove">Remove</button>
+                        @if (favorite != homeCity)
+                        {
+                            <button @onclick="() => SetAsHomeCity(favorite)" class="btn-set-home">Set as Home</button>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="no-favorite-message">No favorite cities found.</p>
+    }
+</div>
 
+<!-- Weather Details Section -->
 @if (isLoading)
 {
     <p class="loading-text">Loading...</p>
@@ -36,54 +72,16 @@ else if (weatherData != null)
         <p>Description: @weatherData.weather.First().description</p>
         <img src="https://openweathermap.org/img/w/@($"{weatherData.weather.First().icon}.png")" alt="Weather Icon" class="weather-icon" />
 
-        <button @onclick="() => AddToFavorites(city)" class="button-add-favorite">
-            Add to Favorites
-        </button>
-
-        <button @onclick="ShowFiveDayForecast" class="button-show-forecast">
-            Show 5-Day Forecast
-        </button>
+        <button @onclick="() => AddToFavorites(city)" class="btn-add-favorite">Add to Favorites</button>
+        <button @onclick="ShowFiveDayForecast" class="btn-show-forecast">Show 5-Day Forecast</button>
+        <button @onclick="() => SetAsHomeCity(city)" class="btn-set-home">Set as Home City</button>
     </div>
 }
 
-@if (favoriteCities != null && favoriteCities.Any())
-{
-    <h3 class="favorite-cities-title">Your Favorite Cities</h3>
-    <table class="favorite-cities-table">
-        <thead>
-            <tr>
-                <th>City</th>
-                <th>Temperature (°C)</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var city in favoriteCities)
-            {
-                <tr>
-                    <td>@city</td>
-                    <td>@(cityWeatherData.ContainsKey(city) ? cityWeatherData[city].main.temp.ToString() : "Loading...")</td>
-                    <td>@(cityWeatherData.ContainsKey(city) ? cityWeatherData[city].weather.FirstOrDefault()?.description : "Loading...")</td>
-                    <td>
-                        <button @onclick="() => RemoveFromFavorites(city)" class="button-remove-favorite">
-                            Remove
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p class="no-favorites-text">You have no favorite cities added yet.</p>
-}
-
+<!-- 5-Day Forecast -->
 @if (forecastData != null)
 {
     <h3 class="forecast-title">5-Day Forecast for @city</h3>
-
     <div class="forecast-container">
         @foreach (var day in forecastData.list)
         {
@@ -101,40 +99,117 @@ else
 @code {
     private string? city;
     private WeatherResponse? weatherData;
-    private ForecastResponse? forecastData; // 5-day forecast data
+    private ForecastResponse? forecastData;
     private bool isLoading;
     private bool error;
     private List<string>? favoriteCities;
     private Dictionary<string, WeatherResponse> cityWeatherData = new();
+    private string? homeCity;
 
     protected override async Task OnInitializedAsync()
     {
         var user = AuthService.GetCurrentUser();
         if (user == null)
         {
-            Console.WriteLine("User not logged in.");
             NavigationManager.NavigateTo("/login");
             return;
         }
 
-        // Retrieve the list of favorite cities for the logged-in user
-        var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync(user.Id!);
-
-        favoriteCities = favoriteCityObjects
-            .Where(city => !string.IsNullOrEmpty(city.CityName))
-            .Select(city => city.CityName!)
+        favoriteCities = (await MongoDBService.GetFavoriteCitiesAsync(user.Id!))
+            .Where(c => !string.IsNullOrEmpty(c.CityName))
+            .Select(c => c.CityName!)
             .ToList();
 
-        foreach (var city in favoriteCities)
+        var homeCityObj = await MongoDBService.GetHomeCityAsync(user.Id!);
+        homeCity = homeCityObj?.CityName;
+
+        if (!string.IsNullOrEmpty(homeCity))
         {
-            await LoadWeatherPreview(city);
+            await LoadWeatherPreview(homeCity);
+        }
+
+        foreach (var favorite in favoriteCities)
+        {
+            await LoadWeatherPreview(favorite);
+        }
+    }
+
+    private async Task SetAsHomeCity(string city)
+    {
+        var user = AuthService.GetCurrentUser();
+        if (user == null) return;
+
+        await MongoDBService.SetHomeCityAsync(user.Id!, city);
+        homeCity = city;
+
+        await JSRuntime.InvokeVoidAsync("showToast", $"{city} is now your home city.", "success");
+        StateHasChanged();
+    }
+
+    private async Task AddToFavorites(string city)
+    {
+        var user = AuthService.GetCurrentUser();
+        if (user == null) return;
+
+        await MongoDBService.AddFavoriteCityAsync(user.Id!, city);
+        favoriteCities?.Add(city);
+
+        await JSRuntime.InvokeVoidAsync("showToast", $"{city} added to favorites.", "success");
+        await LoadWeatherPreview(city);
+        StateHasChanged();
+    }
+
+    private async Task RemoveCity(string city)
+    {
+        var user = AuthService.GetCurrentUser();
+        if (user == null) return;
+
+        await MongoDBService.RemoveFavoriteCityAsync(user.Id!, city);
+        favoriteCities?.Remove(city);
+        cityWeatherData.Remove(city);
+
+        StateHasChanged();
+    }
+
+    private async Task GetWeather()
+    {
+        try
+        {
+            isLoading = true;
+            error = false;
+            weatherData = await WeatherService.GetWeatherAsync(city!);
+        }
+        catch
+        {
+            error = true;
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ShowFiveDayForecast()
+    {
+        try
+        {
+            isLoading = true;
+            forecastData = await WeatherService.GetFiveDayForecastAsync(city!);
+        }
+        catch
+        {
+            error = true;
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
         }
     }
 
     private async Task LoadWeatherPreview(string city)
     {
-        if (string.IsNullOrEmpty(city)) return;
-
         try
         {
             var weather = await WeatherService.GetWeatherAsync(city);
@@ -146,228 +221,105 @@ else
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading weather for {city}: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);  // Optional: log the full stack trace for more details
-        }
-    }
-
-    private async Task AddToFavorites(string city)
-    {
-        try
-        {
-            var user = AuthService.GetCurrentUser();
-            if (user == null) return;
-
-            await MongoDBService.AddFavoriteCityAsync(user.Id!, city);
-            favoriteCities?.Add(city);
-            await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been added to favorites.", "success");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error adding city to favorites: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);  // Optional: log the full stack trace for more details
-            await JSRuntime.InvokeVoidAsync("showToast", "Error adding city to favorites.", "error");
-        }
-    }
-
-    private async Task RemoveFromFavorites(string city)
-    {
-        try
-        {
-            var user = AuthService.GetCurrentUser();
-            if (user == null) return;
-
-            await MongoDBService.RemoveFavoriteCityAsync(user.Id!, city);
-            favoriteCities?.Remove(city);
-            cityWeatherData.Remove(city);
-            await JSRuntime.InvokeVoidAsync("showToast", $"{city} has been removed from favorites.", "success");
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error removing city from favorites: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);  // Optional: log the full stack trace for more details
-            await JSRuntime.InvokeVoidAsync("showToast", "Error removing city from favorites.", "error");
-        }
-    }
-
-    private async Task GetWeather()
-    {
-        try
-        {
-            isLoading = true;
-            error = false;
-
-            weatherData = await WeatherService.GetWeatherAsync(city!);
-
-            if (weatherData == null)
-            {
-                error = true;
-            }
-        }
-        catch (Exception ex)
-        {
-            error = true;
-            Console.WriteLine($"Error retrieving weather: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);  // Optional: log the full stack trace for more details
-        }
-        finally
-        {
-            isLoading = false;
-        }
-    }
-
-    private async Task ShowFiveDayForecast()
-    {
-        try
-        {
-            isLoading = true;
-            error = false;
-
-            forecastData = await WeatherService.GetFiveDayForecastAsync(city!);
-        }
-        catch (Exception ex)
-        {
-            error = true;
-            Console.WriteLine($"Error retrieving 5-day forecast: {ex.Message}");
-            Console.WriteLine(ex.StackTrace);  // Optional: log the full stack trace for more details
-        }
-        finally
-        {
-            isLoading = false;
         }
     }
 }
 
+
 <style>
-    .page-title {
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(to right, #ece9e6, #ffffff);
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h2 {
         text-align: center;
-        margin: 20px;
-        color: #007bff;
+        color: #444;
+        padding: 20px 0;
     }
 
     .search-container {
+        width: 100%;
+        background-color: #f7f7f7;
+        padding: 15px 0;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-box {
         display: flex;
         justify-content: center;
-        margin: 20px 0;
+        align-items: center;
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     .search-input {
+        flex-grow: 1;
+        max-width: 600px;
         padding: 10px;
-        font-size: 16px;
-        border: 2px solid #007bff;
+        border: 1px solid #ccc;
         border-radius: 5px;
         margin-right: 10px;
     }
 
-    .search-button {
-        padding: 10px 15px;
-        font-size: 16px;
-        background-color: #007bff;
-        color: white;
+    .btn-search {
+        background: #4caf50;
         border: none;
+        color: white;
+        padding: 10px 20px;
         border-radius: 5px;
         cursor: pointer;
-        transition: background-color 0.3s;
+    }
+
+    .favorites-section {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .favorite-cities {
+        list-style: none;
+        padding: 0;
+    }
+
+        .favorite-cities li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f7f7f7;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-remove,
+    .btn-set-home {
+        background: #ff4c4c;
+        border: none;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-set-home {
+        background: #ffa500;
     }
 
     .loading-text,
-    .error-text {
+    .error-text,
+    .no-favorite-message {
         text-align: center;
-        font-size: 18px;
-        color: #007bff;
-    }
-
-    .error-text {
-        color: #ff4d4d;
-    }
-
-    .weather-card {
-        text-align: center;
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        padding: 20px;
-        background-color: #f8f9fa;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .weather-icon {
-        width: 100px;
-        margin: 10px 0;
-    }
-
-    .button-add-favorite,
-    .button-show-forecast {
-        padding: 10px 15px;
-        font-size: 16px;
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-        .button-add-favorite:hover,
-        .button-show-forecast:hover {
-            background-color: #218838;
-        }
-
-    .favorite-cities-title {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 24px;
-        color: #007bff;
-    }
-
-    .favorite-cities-table {
-        width: 80%;
-        margin: 20px auto;
-        border-collapse: collapse;
-    }
-
-        .favorite-cities-table th,
-        .favorite-cities-table td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #007bff;
-        }
-
-        .favorite-cities-table th {
-            background-color: #007bff;
-            color: white;
-        }
-
-    .no-favorites-text {
-        text-align: center;
-        font-size: 18px;
-        color: #007bff;
-    }
-
-    .forecast-title {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 24px;
-        color: #007bff;
-    }
-
-    .forecast-container {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    .forecast-card {
-        border: 1px solid #007bff;
-        border-radius: 5px;
-        padding: 15px;
-        margin: 10px;
-        width: 150px;
-        text-align: center;
-        background-color: #f8f9fa;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .forecast-icon {
-        width: 50px;
-        margin: 5px 0;
+        color: #777;
+        margin-top: 20px;
     }
 </style>

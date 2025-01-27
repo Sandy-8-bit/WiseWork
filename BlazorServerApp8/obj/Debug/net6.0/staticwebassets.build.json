@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ngNqYffZttUGNCDRcZDmdOf0C6kmRAhNyAXQCTX2aF4=",
+  "Hash": "voRrElZVkMSdDAzoorxTnSGnh7sFjYh+VPnQ/BNnBss=",
   "Source": "BlazorServerApp8",
   "BasePath": "_content/BlazorServerApp8",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "BlazorServerApp8\\wwwroot",
       "Source": "BlazorServerApp8",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\BlazorServerApp8.styles.css",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\BlazorServerApp8.styles.css",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "BlazorServerApp8.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\BlazorServerApp8.styles.css"
+      "OriginalItemSpec": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\bundle\\BlazorServerApp8.styles.css"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BlazorServerApp8.bundle.scp.css",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BlazorServerApp8.bundle.scp.css",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Computed",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "BlazorServerApp8.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "D:\\New folder (2)\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BlazorServerApp8.bundle.scp.css"
+      "OriginalItemSpec": "D:\\Paid project\\BlazorServerApp8\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\BlazorServerApp8.bundle.scp.css"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\css\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/css/open-iconic-bootstrap.min.css",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.eot",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.eot"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.otf",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.otf"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.svg",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.svg"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.ttf",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.ttf"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/font/fonts/open-iconic.woff",
       "AssetKind": "All",
@@ -207,10 +207,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\font\\fonts\\open-iconic.woff"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\FONT-LICENSE",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/FONT-LICENSE",
       "AssetKind": "All",
@@ -226,10 +226,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\FONT-LICENSE"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\ICON-LICENSE",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/ICON-LICENSE",
       "AssetKind": "All",
@@ -245,10 +245,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\ICON-LICENSE"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\README.md",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\open-iconic\\README.md",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/open-iconic/README.md",
       "AssetKind": "All",
@@ -264,10 +264,10 @@
       "OriginalItemSpec": "wwwroot\\css\\open-iconic\\README.md"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\css\\site.css",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\css\\site.css",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -283,10 +283,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\favicon.ico",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\favicon.ico",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -302,10 +302,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\js\\toast.js",
+      "Identity": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\js\\toast.js",
       "SourceId": "BlazorServerApp8",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\New folder (2)\\BlazorServerApp8\\wwwroot\\",
+      "ContentRoot": "D:\\Paid project\\BlazorServerApp8\\wwwroot\\",
       "BasePath": "_content/BlazorServerApp8",
       "RelativePath": "js/toast.js",
       "AssetKind": "All",

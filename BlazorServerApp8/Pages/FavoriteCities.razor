@@ -70,41 +70,36 @@
     private Dictionary<string, WeatherResponse> cityWeatherData = new();
     private WeatherResponse? weatherData;
     private string? selectedCity;
+    private string? homeCity; // Added homeCity variable
 
     protected override async Task OnInitializedAsync()
     {
-        try
+        if (AuthService == null || MongoDBService == null || NavigationManager == null)
         {
-            var user = AuthService.GetCurrentUser();
-            if (user == null)
-            {
-                Console.WriteLine("User not logged in.");
-                NavigationManager.NavigateTo("/login");
-                return;
-            }
-
-            var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync(user.Id!);
-
-            if (favoriteCityObjects != null && favoriteCityObjects.Any())
-            {
-                favoriteCities = favoriteCityObjects
-                    .Where(city => !string.IsNullOrEmpty(city.CityName))
-                    .Select(city => city.CityName!)
-                    .ToList();
-            }
-
-            if (favoriteCities != null && favoriteCities.Any())
-            {
-                foreach (var city in favoriteCities)
-                {
-                    await LoadWeatherPreview(city);
-                }
-            }
+            throw new InvalidOperationException("Services are not initialized.");
         }
-        catch (Exception ex)
+
+        var user = AuthService.GetCurrentUser();
+        if (user == null)
         {
-            Console.WriteLine($"Error loading favorite cities: {ex.Message}");
+            Console.WriteLine("User not logged in.");
+            NavigationManager.NavigateTo("/login");
+            return;
         }
+
+        // Retrieve the list of favorite cities for the logged-in user
+        var favoriteCityObjects = await MongoDBService.GetFavoriteCitiesAsync(user.Id!);
+        favoriteCities = favoriteCityObjects
+            .Where(city => !string.IsNullOrEmpty(city.CityName))
+            .Select(city => city.CityName!)
+            .ToList();
+
+        // Retrieve the home city
+        var homeCityObject = await MongoDBService.GetHomeCityAsync(user.Id!);
+        homeCity = homeCityObject?.CityName;
+
+        // Load weather for each favorite city
+        await Task.WhenAll(favoriteCities.Select(city => LoadWeatherPreview(city!)));
     }
 
     private async Task LoadWeatherPreview(string city)

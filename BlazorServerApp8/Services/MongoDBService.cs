@@ -1,9 +1,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 public class MongoDBService
 {
@@ -62,9 +59,62 @@ public class MongoDBService
             Console.WriteLine($"Error removing favorite city: {ex.Message}");
         }
     }
+
+    // Set a city as the home city
+    public async Task SetHomeCityAsync(string userId, string cityName)
+    {
+        try
+        {
+            // Remove the current home city
+            var removeHomeCityFilter = Builders<FavoriteCity>.Filter.Eq(x => x.UserId, userId) &
+                                       Builders<FavoriteCity>.Filter.Eq(x => x.IsHomeCity, true);
+            var unsetHomeCityUpdate = Builders<FavoriteCity>.Update.Set(x => x.IsHomeCity, false);
+            await _favoriteCities.UpdateOneAsync(removeHomeCityFilter, unsetHomeCityUpdate);
+
+            // Set the new home city
+            var setHomeCityFilter = Builders<FavoriteCity>.Filter.Eq(x => x.UserId, userId) &
+                                    Builders<FavoriteCity>.Filter.Eq(x => x.CityName, cityName);
+            var setHomeCityUpdate = Builders<FavoriteCity>.Update.Set(x => x.IsHomeCity, true);
+            await _favoriteCities.UpdateOneAsync(setHomeCityFilter, setHomeCityUpdate);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error setting home city: {ex.Message}");
+        }
+    }
+
+    // Remove the home city for the user
+    public async Task RemoveHomeCityAsync(string userId)
+    {
+        try
+        {
+            var filter = Builders<FavoriteCity>.Filter.Eq(x => x.UserId, userId);
+            var update = Builders<FavoriteCity>.Update.Set(x => x.IsHomeCity, false);
+            await _favoriteCities.UpdateOneAsync(filter & Builders<FavoriteCity>.Filter.Eq(x => x.IsHomeCity, true), update);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error removing home city: {ex.Message}");
+        }
+    }
+
+    // Get the home city for a specific user
+    public async Task<FavoriteCity?> GetHomeCityAsync(string userId)
+    {
+        try
+        {
+            return await _favoriteCities
+                .Find(city => city.UserId == userId && city.IsHomeCity == true)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching home city: {ex.Message}");
+            return null;
+        }
+    }
 }
 
-// FavoriteCity model
 public class FavoriteCity
 {
     [BsonId]
@@ -76,4 +126,7 @@ public class FavoriteCity
 
     [BsonElement("CityName")]
     public string? CityName { get; set; }
+
+    [BsonElement("IsHomeCity")]
+    public bool IsHomeCity { get; set; }
 }

@@ -181,9 +181,11 @@
     private bool isProcessing = false;
     private ElementReference messagesDiv;
 
-    protected override async Task OnInitializedAsync()
+    // OnInitializedAsync no longer requires async as we are not doing any async operations
+    protected override Task OnInitializedAsync()
     {
         messages.Add(("Hi! I can help you check the weather. Just ask me about the weather in any city!", false, null));
+        return Task.CompletedTask;
     }
 
     private async Task SendMessage()

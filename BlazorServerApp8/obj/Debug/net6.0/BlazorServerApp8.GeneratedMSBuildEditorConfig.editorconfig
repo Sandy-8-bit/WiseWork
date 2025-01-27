@@ -9,71 +9,71 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BlazorServerApp8
 build_property.RootNamespace = BlazorServerApp8
-build_property.ProjectDir = D:\New folder (2)\BlazorServerApp8\
+build_property.ProjectDir = D:\Paid project\BlazorServerApp8\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\New folder (2)\BlazorServerApp8
+build_property.MSBuildProjectDirectory = D:\Paid project\BlazorServerApp8
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/New folder (2)/BlazorServerApp8/App.razor]
+[D:/Paid project/BlazorServerApp8/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/Counter.razor]
+[D:/Paid project/BlazorServerApp8/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/FavoriteCities.razor]
+[D:/Paid project/BlazorServerApp8/Pages/FavoriteCities.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmF2b3JpdGVDaXRpZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/FetchData.razor]
+[D:/Paid project/BlazorServerApp8/Pages/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/Index.razor]
+[D:/Paid project/BlazorServerApp8/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/Login.razor]
+[D:/Paid project/BlazorServerApp8/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/Weather.razor]
+[D:/Paid project/BlazorServerApp8/Pages/Weather.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/WeatherChat.razor]
+[D:/Paid project/BlazorServerApp8/Pages/WeatherChat.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlckNoYXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Shared/SurveyPrompt.razor]
+[D:/Paid project/BlazorServerApp8/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/_Imports.razor]
+[D:/Paid project/BlazorServerApp8/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Shared/MainLayout.razor]
+[D:/Paid project/BlazorServerApp8/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-487ezu7ixh
 
-[D:/New folder (2)/BlazorServerApp8/Shared/NavMenu.razor]
+[D:/Paid project/BlazorServerApp8/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-a2xmvtwy20
 
-[D:/New folder (2)/BlazorServerApp8/Pages/Error.cshtml]
+[D:/Paid project/BlazorServerApp8/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/_Host.cshtml]
+[D:/Paid project/BlazorServerApp8/Pages/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0hvc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/New folder (2)/BlazorServerApp8/Pages/_Layout.cshtml]
+[D:/Paid project/BlazorServerApp8/Pages/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
