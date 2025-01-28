@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
+    "D:\\Docker\\BlazorServerApp8\\BlazorServerApp8.csproj": {}
   },
   "projects": {
-    "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj": {
+    "D:\\Docker\\BlazorServerApp8\\BlazorServerApp8.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectUniqueName": "D:\\Docker\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "projectName": "BlazorServerApp8",
-        "projectPath": "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj",
+        "projectPath": "D:\\Docker\\BlazorServerApp8\\BlazorServerApp8.csproj",
         "packagesPath": "C:\\Users\\santh\\.nuget\\packages\\",
-        "outputPath": "D:\\Paid project\\BlazorServerApp8\\obj\\",
+        "outputPath": "D:\\Docker\\BlazorServerApp8\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\santh\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -162,6 +162,32 @@ public class WeatherService
         return await GetWeatherAsync(city); // Reusing GetWeatherAsync method
     }
 
+    // Fetch current weather data by coordinates
+    public async Task<WeatherResponse?> GetWeatherByCoordinatesAsync(double latitude, double longitude)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"https://api.openweathermap.org/data/2.5/weather?lat={latitude}&lon={longitude}&appid={apiKey}&units=metric");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<WeatherResponse>();
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Error: {response.StatusCode}, Content: {content}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching weather data by coordinates: {ex.Message}");
+        }
+
+        return null;
+    }
+
+
     // Clear the cache (useful in cases where the data might need refreshing)
     public void ClearCache()
     {

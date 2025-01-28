@@ -2,6 +2,8 @@
 @inject WeatherService WeatherService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
+@using Microsoft.JSInterop;
+
 @inject MongoDBService MongoDBService
 @inject SupabaseAuthService AuthService
 @using BlazorWasmApp.Models
@@ -16,34 +18,59 @@ else if (error)
 {
     <p class="error-text">Error retrieving weather data. Please try again.</p>
 }
-else if (!string.IsNullOrEmpty(homeCity) && cityWeatherData.ContainsKey(homeCity))
-{
-    <div class="home-weather-card">
-        <h3>Home City: @homeCity</h3>
-        <p>Temperature: @cityWeatherData[homeCity].main.temp °C</p>
-        <p>Feels Like: @cityWeatherData[homeCity].main.feels_like °C</p>
-        <p>Humidity: @cityWeatherData[homeCity].main.humidity %</p>
-        <p>Description: @cityWeatherData[homeCity].weather.First().description</p>
-        <img src="https://openweathermap.org/img/w/@($"{cityWeatherData[homeCity].weather.First().icon}.png")" alt="Weather Icon" class="weather-icon" />
-    </div>
-}
 else
 {
-    <p class="no-home-city-text">No home city set. Please set a home city on the Weather page.</p>
+    <div>
+        @if (!string.IsNullOrEmpty(homeCity) && cityWeatherData.ContainsKey(homeCity))
+        {
+            <div class="home-weather-card">
+                <h3>Home City: @homeCity</h3>
+                <p>Temperature: @cityWeatherData[homeCity].main.temp °C</p>
+                <p>Feels Like: @cityWeatherData[homeCity].main.feels_like °C</p>
+                <p>Humidity: @cityWeatherData[homeCity].main.humidity %</p>
+                <p>Description: @cityWeatherData[homeCity].weather.First().description</p>
+                <img src="https://openweathermap.org/img/w/@($"{cityWeatherData[homeCity].weather.First().icon}.png")" alt="Weather Icon" class="weather-icon" />
+            </div>
+        }
+        else
+        {
+            <p class="no-home-city-text">No home city set. Please set a home city on the Weather page.</p>
+        }
+
+        @if (currentWeather != null && ShowCurrentWeather)
+        {
+            <div class="current-weather-card">
+                <h3>Current Location Weather</h3>
+                <p>Location: @currentWeather.name</p>
+                <p>Temperature: @currentWeather.main.temp °C</p>
+                <p>Feels Like: @currentWeather.main.feels_like °C</p>
+                <p>Humidity: @currentWeather.main.humidity %</p>
+                <p>Description: @currentWeather.weather.First().description</p>
+                <img src="https://openweathermap.org/img/w/@($"{currentWeather.weather.First().icon}.png")" alt="Weather Icon" class="weather-icon" />
+                <button @onclick="CloseCurrentWeather">Close</button> <!-- Close button -->
+            </div>
+        }
+        else
+        {
+            <p>Click the button below to get the current location's weather</p>
+        }
+
+        <!-- Button placed down below -->
+        <div class="get-weather-button">
+            <button @onclick="GetCurrentLocationWeather">Get Current Location Weather</button>
+        </div>
+    </div>
 }
 
 @code {
     private bool isLoading;
     private bool error;
+    private bool ShowCurrentWeather = false;  // New flag to toggle visibility of current weather
     private string? homeCity;
     private Dictionary<string, WeatherResponse> cityWeatherData = new();
+    private WeatherResponse? currentWeather;
 
     protected override async Task OnInitializedAsync()
-    {
-        await LoadHomeCityWeather();
-    }
-
-    protected override async Task OnParametersSetAsync()
     {
         await LoadHomeCityWeather();
     }
@@ -84,4 +111,95 @@ else
             isLoading = false;
         }
     }
+
+    private async Task GetCurrentLocationWeather()
+    {
+        try
+        {
+            isLoading = true;
+            error = false;
+
+            // Call JS function to get the current location
+            var location = await JSRuntime.InvokeAsync<Location>("getLocation");
+
+            // Fetch weather data based on current coordinates
+            currentWeather = await WeatherService.GetWeatherByCoordinatesAsync(location.Latitude, location.Longitude);
+            ShowCurrentWeather = true;  // Set flag to show the weather
+        }
+        catch (Exception ex)
+        {
+            error = true;
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void CloseCurrentWeather()
+    {
+        ShowCurrentWeather = false;  // Set flag to hide the current weather card
+    }
+
+    public class Location
+    {
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+    }
 }
+
+
+<style>
+    /* Basic Styles for Weather Cards */
+    .home-weather-card, .current-weather-card {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .weather-icon {
+        width: 50px;
+        height: 50px;
+    }
+
+    .page-title {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .loading-text, .error-text {
+        font-size: 18px;
+        color: #666;
+    }
+
+    /* Styling for the button */
+    .get-weather-button {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    .no-home-city-text {
+        color: #777;
+        font-size: 16px;
+    }
+
+</style>

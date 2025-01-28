@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Yg9rTIM7jRc=",
+  "dgSpecHash": "teoeTDof+Mo=",
   "success": true,
-  "projectFilePath": "D:\\Paid project\\BlazorServerApp8\\BlazorServerApp8.csproj",
+  "projectFilePath": "D:\\Docker\\BlazorServerApp8\\BlazorServerApp8.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\santh\\.nuget\\packages\\aspnetcore.identity.mongo\\9.1.2\\aspnetcore.identity.mongo.9.1.2.nupkg.sha512",
     "C:\\Users\\santh\\.nuget\\packages\\awssdk.core\\3.7.100.14\\awssdk.core.3.7.100.14.nupkg.sha512",
